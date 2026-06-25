@@ -451,32 +451,71 @@
 
     .summary-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin: 12px 0 14px;
+      grid-template-columns: 1.05fr .95fr 1.45fr;
+      gap: 12px;
+      margin: 14px 0 16px;
     }
 
     .summary-box {
-      min-height: 92px;
-      padding: 12px;
-      border: 1px solid var(--line);
+      min-height: 116px;
+      padding: 14px;
+      border: 1px solid var(--line-strong);
       border-radius: var(--radius);
-      background: rgba(9, 10, 15, .38);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .055), rgba(9, 10, 15, .34));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
+    }
+
+    .summary-box[data-kind="objective"] {
+      border-color: rgba(33, 200, 173, .45);
+      background: linear-gradient(180deg, rgba(33, 200, 173, .14), rgba(9, 10, 15, .36));
+    }
+
+    .summary-box[data-kind="grenades"] {
+      border-color: rgba(241, 196, 15, .42);
+      background: linear-gradient(180deg, rgba(241, 196, 15, .12), rgba(9, 10, 15, .36));
+    }
+
+    .summary-box[data-kind="play"] {
+      border-color: rgba(123, 53, 255, .46);
+      background: linear-gradient(180deg, rgba(123, 53, 255, .14), rgba(9, 10, 15, .36));
     }
 
     .summary-box strong {
-      display: block;
-      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
       color: var(--text);
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
 
+    .summary-box strong::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 16px rgba(163, 117, 255, .62);
+    }
+
+    .summary-box[data-kind="objective"] strong::before {
+      background: var(--p1);
+      box-shadow: 0 0 16px rgba(33, 200, 173, .7);
+    }
+
+    .summary-box[data-kind="grenades"] strong::before {
+      background: var(--p3);
+      box-shadow: 0 0 16px rgba(241, 196, 15, .68);
+    }
+
     .summary-box p {
       margin: 0;
-      color: var(--muted);
-      font-size: 14px;
+      color: #edf1f8;
+      font-size: 15px;
+      font-weight: 620;
+      line-height: 1.46;
     }
 
     .briefing {
@@ -921,10 +960,71 @@
       {
         id: "mirage",
         name: "Mirage",
-        status: "grafiki gotowe",
-        description: "Link do dokumentu Mirage blokuje eksport tekstu. Grafiki CT i mapa sa juz podpiete.",
+        status: "Terro uzupelnione",
+        description: "Taktyki T z dokumentu Google Docs, CT i mapa jako grafiki.",
         sections: {
-          t: [],
+          t: [
+            {
+              id: "mirage-pistol-a",
+              title: "1. Pistol A - Palaces & Ramp",
+              type: "pistol",
+              objective: "Szybkie przejecie punktu A.",
+              grenades: "P3 flash. P5 dwa flashe.",
+              play: "P1 i P3 wchodza do palace i czekaja na znak. Po znaku P3 rzuca flasha i jest wjazd na site. P2, P4 i P5 ida ramp, na znak P5 rzuca dwa flashe i wjazd. W miare mozliwosci P3 zostaje palace/balkon.",
+              players: {
+                p1: "Wchodzisz palace z P3, nie peekujesz balkonu, czekasz na znak. Po znaku wjazd od razu na site bez zatrzymania, mozesz skoczyc w strone ninja.",
+                p2: "Nic nie kupuj, idziesz ramp i czekasz do znaku na wjazd. Nie peekujesz. Wchodzisz pierwszy od razu na tetris i obserwujesz site.",
+                p3: "Wchodzisz palace, nie peekujesz i czekasz na znak. Rzucasz flasha, P1 schodzi na dol, a ty zostajesz u gory i oslaniasz z balkonu/palace. Na poczatku patrz schody i jungle.",
+                p4: "Idziesz ramp, dajesz znak. Po znaku wchodzisz drugi i idziesz site albo agresywnie schody.",
+                p5: "Kup dwa flashe. Na znak rzucasz je na A, wchodzisz trzeci przez ramp i plantujesz bombe przy pierwszej dobrej okazji."
+              }
+            },
+            {
+              id: "mirage-default-b-pistol-b",
+              title: "2. Default B / Pistol B - Mid/Aps Split",
+              type: "default",
+              objective: "Wejscie na B site przez mida i aparty.",
+              grenades: "P1 smoke. P2 flash i smoke. P3 smoke. P5 smoke.",
+              play: "P1 i P2 ida TV/Alley, czekaja na znak, smokuja, flashuja i wchodza apartami. Reszta idzie mid do shorta po wyrzuceniu smoke.",
+              players: {
+                p1: "Kup smoke, idz TV/Alley i czekaj na znak. Wceluj sie w aparty, ale nie peekuj. Masz byc cicho. Wchodzisz pierwszy apartami na znak.",
+                p2: "Kup flasha i smoke, idz TV/Alley i czekaj na znak. Masz byc cicho. Na znak flashujesz i wjezdzasz jako drugi apartami.",
+                p3: "Na znak dajesz smoke na cona, idziesz mida do shorta i na B. Niesiesz pake, wchodzisz drugi.",
+                p4: "Od razu lecisz mid, dajesz znak P3 i P5, czekasz na smoke i wchodzisz shorta jako pierwszy. Potem dajesz znak P1 i P2.",
+                p5: "Na znak smoke na okno, idziesz mida i na shorta. Mozesz zostac drabina albo za coverem na short, bo tego pilnujesz po plancie."
+              }
+            },
+            {
+              id: "mirage-default-a",
+              title: "3. Default A - Smoke Barrage",
+              type: "default",
+              objective: "Smoke na caly A site i pelne wejscie.",
+              grenades: "P2 smoke. P3 molotov. P4 smoke. P5 smoke i dwa flashe.",
+              play: "P1 i P3 wchodza palace po cichu, nie peakuja i czekaja na znak. Po znaku P3 pali pod drewno. P2, P4 i P5 ida ramp; na znak leca smoke, na kolejny znak wszyscy wchodza.",
+              players: {
+                p1: "Idziesz palace, nie peekujesz, patrzysz czy CT nie rushuje. Po znaku wejscia wchodzisz i zeskakujesz od razu site, moze byc ninja, ale pomagasz przejac caly site. Grasz cicho.",
+                p2: "Na znak rzucasz smoke na CT, a na znak wjazdu rzucasz dwa flashe. Wchodzisz trzeci z rampy i przy najlepszej okazji plantujesz, zostajesz na tetrisie.",
+                p3: "Idziesz palace cicho. Na znak rzucasz molotova pod balkon i runde raczej rozgrywasz z palace/balkonu.",
+                p4: "Rzucasz sciane smoke na schody i obok, dajesz znak do smoke i do wejscia. Wchodzisz drugi w kierunku site albo agresywnie obok schodow.",
+                p5: "Masz bombe. Podchodzisz ramp cicho, dajesz P4 smoke i czekasz na znak wjazdu. Nie peekujesz."
+              }
+            },
+            {
+              id: "mirage-mid-split",
+              title: "4. Mid Split - Standard B",
+              type: "full buy",
+              objective: "Zajecie mida od tunelu i top mida, z jednym lurkiem na A.",
+              grenades: "Gra na pelnym fullu, wszyscy wszystko.",
+              play: "Zajecie mida po smokach, wejscie P5 od tuneli i lurk P2 na palace/ramp. Po zajeciu mida IGL decyduje co dalej; taktyka nie ma stalego zajecia site'u.",
+              players: {
+                p1: "Dropnij smoke dla P4, idziesz mida, ale wchodzisz jako trzeci.",
+                p2: "Po cichu idziesz ramp/palace, nie ujawniasz sie na poczatku. Czekasz az zrobimy zamieszanie na midzie; gdy CT nie bedzie sie ciebie spodziewac, po cichu wchodzisz A.",
+                p3: "Rzucasz smoke na cona i wchodzisz pierwszy na mida. Zalecana AWP. Otrzymasz dwa smoke od P5 na spawnie.",
+                p4: "Rzucasz smoke na okno, wchodzisz drugi mida. Otrzymasz smoke od P1 na spawnie.",
+                p5: "Dropasz smoke dla P3 na spawnie, idziesz po cichu TV i tunel, wchodzisz pod okno na znak."
+              }
+            }
+          ],
           ct: [
             { id: "mirage-ct-setup", title: "Ustawienia CT Mirage", image: "assets/maps/mirage-ct.png", note: "Kliknij grafike, zeby powiekszyc i przesuwac." }
           ],
@@ -1001,8 +1101,23 @@
               }
             },
             {
+              id: "cache-default-a",
+              title: "5. Default A",
+              type: "default",
+              objective: "Pelne wejscie na A z A main i drzwi.",
+              grenades: "Wszyscy wszystko full.",
+              play: "P1 i P2 ida drzwi po cichu. P3 i P4 ida A main po cichu. P5 smokuje highway na znak, potem na drugi znak wejscie. Miejscowki po przejeciu site sa pogladowe.",
+              players: {
+                p1: "Idziesz po cichu drzwi, ale ich nie otwierasz. Czekasz na znak wejscia i wchodzisz pierwszy na site w strone quada jesli sie da.",
+                p2: "Idziesz po cichu drzwi, ale ich nie otwierasz. Czekasz na znak wejscia i wchodzisz drugi. Jesli site przejety, cofasz do drzwi albo wchodzisz na boxy.",
+                p3: "Idziesz A main i czekasz na znak wjazdu. Po wjezdzie, jesli macie site, wracasz do A main i patrzysz plecy albo grasz z A maina.",
+                p4: "Idziesz A main i dajesz znak na smoke, potem znak na wjazd. Wchodzisz drugi i zostajesz wozek.",
+                p5: "Dropasz C4 u gory schodkow, wracasz beczke i na znak smokujesz. Bierzesz C4, na znak wjezdzasz trzeci, plantujesz i grasz defensywnie na site."
+              }
+            },
+            {
               id: "cache-default-mid",
-              title: "5. Default Mid",
+              title: "6. Default Mid",
               type: "default",
               objective: "Wejscie na mida i po jego przejeciu przejscie na jeden z siteow.",
               grenades: "Wszyscy wszystko full.",
@@ -1017,7 +1132,7 @@
             },
             {
               id: "cache-default-b",
-              title: "6. Default B",
+              title: "7. Default B",
               type: "default",
               objective: "Zajecie B po pelnym zestawie smoke.",
               grenades: "Wszyscy wszystko full.",
@@ -1030,21 +1145,6 @@
                 p5: "Masz bombe. Idziesz cicho na B main, czekasz na drugiego flasha, po flashu wchodzisz trzeci."
               }
             },
-            {
-              id: "cache-default-a",
-              title: "7. Default A",
-              type: "default",
-              objective: "Pelne wejscie na A z A main i drzwi.",
-              grenades: "Wszyscy wszystko full.",
-              play: "P1 i P2 ida drzwi po cichu. P3 i P4 ida A main po cichu. P5 smokuje highway na znak, potem na drugi znak wejscie. Miejscowki po przejeciu site sa pogladowe.",
-              players: {
-                p1: "Idziesz po cichu drzwi, ale ich nie otwierasz. Czekasz na znak wejscia i wchodzisz pierwszy na site w strone quada jesli sie da.",
-                p2: "Idziesz po cichu drzwi, ale ich nie otwierasz. Czekasz na znak wejscia i wchodzisz drugi. Jesli site przejety, cofasz do drzwi albo wchodzisz na boxy.",
-                p3: "Idziesz A main i czekasz na znak wjazdu. Po wjezdzie, jesli macie site, wracasz do A main i patrzysz plecy albo grasz z A maina.",
-                p4: "Idziesz A main i dajesz znak na smoke, potem znak na wjazd. Wchodzisz drugi i zostajesz wozek.",
-                p5: "Dropasz C4 u gory schodkow, wracasz beczke i na znak smokujesz. Bierzesz C4, na znak wjezdzasz trzeci, plantujesz i grasz defensywnie na site."
-              }
-            }
           ],
           ct: [
             { id: "cache-ct-setup", title: "Ustawienia CT Cache", image: "assets/maps/cache-ct.png", note: "Role jak na Mirage, grafika do powiekszenia i przesuwania." }
@@ -1135,9 +1235,9 @@
             </div>
           </header>
           <div class="summary-grid">
-            <div class="summary-box"><strong>Cel</strong><p>${tactic.objective}</p></div>
-            <div class="summary-box"><strong>Granaty</strong><p>${tactic.grenades}</p></div>
-            <div class="summary-box"><strong>Rozegranie</strong><p>${tactic.play}</p></div>
+            <div class="summary-box" data-kind="objective"><strong>Cel</strong><p>${tactic.objective}</p></div>
+            <div class="summary-box" data-kind="grenades"><strong>Granaty</strong><p>${tactic.grenades}</p></div>
+            <div class="summary-box" data-kind="play"><strong>Rozegranie</strong><p>${tactic.play}</p></div>
           </div>
           <div class="briefing">${playerRows}</div>
         </article>

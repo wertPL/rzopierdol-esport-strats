@@ -8,21 +8,25 @@
   <style>
     :root {
       color-scheme: dark;
-      --bg: #0a0b10;
+      --bg: #090a0f;
       --panel: #11131b;
       --panel-2: #171a24;
-      --line: #292d3a;
-      --line-strong: #3b4153;
-      --text: #f4f5f8;
+      --panel-3: #202431;
+      --line: #292e3c;
+      --line-strong: #3d4558;
+      --text: #f4f6fb;
       --muted: #a6adbd;
-      --soft: #747d91;
-      --purple: #7b35ff;
-      --purple-2: #a375ff;
-      --green: #53d18b;
-      --orange: #f1a34d;
-      --danger: #e65f6c;
-      --shadow: 0 22px 70px rgba(0, 0, 0, 0.38);
+      --soft: #737d91;
+      --accent: #7b35ff;
+      --accent-2: #a375ff;
+      --p1: #21c8ad;
+      --p2: #3498db;
+      --p3: #f1c40f;
+      --p4: #a95bc8;
+      --p5: #ff7a0f;
+      --danger: #ff5e50;
       --radius: 8px;
+      --shadow: 0 22px 80px rgba(0, 0, 0, .42);
       --ease: cubic-bezier(.2, .9, .2, 1);
     }
 
@@ -38,8 +42,8 @@
       margin: 0;
       min-height: 100vh;
       background:
-        linear-gradient(180deg, rgba(123, 53, 255, 0.10), transparent 260px),
-        radial-gradient(circle at top right, rgba(83, 209, 139, 0.08), transparent 300px),
+        radial-gradient(circle at top left, rgba(123, 53, 255, .12), transparent 320px),
+        radial-gradient(circle at top right, rgba(33, 200, 173, .09), transparent 360px),
         var(--bg);
       color: var(--text);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -48,8 +52,7 @@
     }
 
     button,
-    input,
-    textarea {
+    select {
       font: inherit;
     }
 
@@ -69,7 +72,7 @@
       height: 100vh;
       padding: 22px 18px;
       border-right: 1px solid var(--line);
-      background: rgba(10, 11, 16, 0.88);
+      background: rgba(9, 10, 15, .9);
       backdrop-filter: blur(18px);
       overflow: auto;
     }
@@ -78,7 +81,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 28px;
+      margin-bottom: 26px;
     }
 
     .brand img {
@@ -88,7 +91,7 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: #05060a;
-      box-shadow: 0 0 0 4px rgba(123, 53, 255, 0.08);
+      box-shadow: 0 0 0 4px rgba(123, 53, 255, .08);
     }
 
     .brand strong {
@@ -102,32 +105,35 @@
       margin-top: 4px;
       color: var(--muted);
       font-size: 12px;
-      text-transform: uppercase;
+      font-weight: 750;
       letter-spacing: .12em;
+      text-transform: uppercase;
     }
 
     .nav-label {
       margin: 22px 6px 10px;
       color: var(--soft);
       font-size: 11px;
-      font-weight: 800;
+      font-weight: 850;
       letter-spacing: .14em;
       text-transform: uppercase;
     }
 
     .map-list,
-    .quick-list {
+    .role-list {
       display: grid;
       gap: 8px;
     }
 
     .map-button,
-    .quick-button {
+    .role-button {
       width: 100%;
       border: 1px solid transparent;
       border-radius: var(--radius);
       background: transparent;
+      color: var(--muted);
       cursor: pointer;
+      text-align: left;
       transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease), color .18s var(--ease);
     }
 
@@ -136,35 +142,48 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      min-height: 52px;
+      min-height: 54px;
       padding: 10px 12px;
-      color: var(--muted);
-      text-align: left;
+    }
+
+    .role-button {
+      display: grid;
+      gap: 2px;
+      min-height: 50px;
+      padding: 10px 12px;
     }
 
     .map-button:hover,
-    .quick-button:hover {
+    .role-button:hover {
       transform: translateY(-1px);
       border-color: var(--line-strong);
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, .04);
       color: var(--text);
     }
 
     .map-button.is-active {
-      border-color: rgba(123, 53, 255, 0.58);
-      background: rgba(123, 53, 255, 0.14);
+      border-color: rgba(123, 53, 255, .58);
+      background: rgba(123, 53, 255, .14);
       color: var(--text);
     }
 
-    .map-name {
+    .role-button.is-active {
+      border-color: rgba(33, 200, 173, .52);
+      background: rgba(33, 200, 173, .12);
+      color: var(--text);
+    }
+
+    .map-name,
+    .role-name {
       display: block;
-      font-weight: 800;
+      color: inherit;
+      font-weight: 850;
       text-transform: uppercase;
     }
 
-    .map-meta {
+    .map-meta,
+    .role-meta {
       display: block;
-      margin-top: 2px;
       color: var(--soft);
       font-size: 12px;
     }
@@ -176,34 +195,35 @@
       background: var(--panel-2);
       color: var(--muted);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 850;
       text-align: center;
     }
 
-    .quick-button {
-      padding: 10px 12px;
-      color: var(--muted);
-      text-align: left;
+    .player-legend {
+      display: grid;
+      gap: 9px;
+      margin-top: 4px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(17, 19, 27, .72);
     }
 
-    .quick-button span {
-      display: block;
-      color: var(--text);
+    .player-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
       font-size: 13px;
       font-weight: 750;
     }
 
-    .quick-button small {
-      display: block;
-      margin-top: 2px;
-      color: var(--soft);
-      font-size: 12px;
-    }
-
-    .quick-button.is-active {
-      border-color: rgba(83, 209, 139, 0.52);
-      background: rgba(83, 209, 139, 0.12);
-      color: var(--text);
+    .dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--player-color);
+      box-shadow: 0 0 18px color-mix(in srgb, var(--player-color), transparent 58%);
     }
 
     .main {
@@ -213,10 +233,10 @@
 
     .topbar {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 18px;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
     .mobile-logo {
@@ -224,9 +244,9 @@
       width: 42px;
       height: 42px;
       object-fit: contain;
+      border: 1px solid var(--line);
       border-radius: var(--radius);
       background: #05060a;
-      border: 1px solid var(--line);
     }
 
     .eyebrow {
@@ -234,7 +254,7 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 8px;
-      color: var(--purple-2);
+      color: var(--accent-2);
       font-size: 12px;
       font-weight: 850;
       letter-spacing: .13em;
@@ -246,20 +266,71 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 20px rgba(83, 209, 139, 0.7);
+      background: var(--p1);
+      box-shadow: 0 0 18px rgba(33, 200, 173, .7);
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(32px, 5vw, 72px);
+      font-size: clamp(34px, 5vw, 72px);
       line-height: .96;
       letter-spacing: 0;
     }
 
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(17, 19, 27, .8);
+    }
+
+    .toolbar-title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .toolbar-title strong {
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .toolbar-title span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .field select {
+      min-width: 128px;
+      height: 38px;
+      padding: 0 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: #0d0f15;
+      color: var(--text);
+      outline: none;
+    }
+
     .workspace {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 280px;
+      grid-template-columns: minmax(0, 1fr) 282px;
       gap: 18px;
       align-items: start;
     }
@@ -268,7 +339,7 @@
     .legend-panel {
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: rgba(17, 19, 27, 0.86);
+      background: rgba(17, 19, 27, .86);
       box-shadow: var(--shadow);
     }
 
@@ -284,12 +355,12 @@
       gap: 18px;
       padding: 22px;
       border-bottom: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .035), transparent);
     }
 
     .map-header h2 {
       margin: 0;
-      font-size: 30px;
+      font-size: 32px;
       line-height: 1;
       text-transform: uppercase;
     }
@@ -297,6 +368,28 @@
     .map-header p {
       margin: 8px 0 0;
       color: var(--muted);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 26px;
+      padding: 4px 8px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tag[data-player] {
+      border-color: color-mix(in srgb, var(--player-color), transparent 35%);
+      color: var(--player-color);
+      background: color-mix(in srgb, var(--player-color), transparent 90%);
     }
 
     .section {
@@ -316,118 +409,187 @@
       gap: 12px;
     }
 
-    .tactic-card {
-      scroll-margin-top: 22px;
-      padding: 16px;
+    .tactic-card,
+    .image-card,
+    .notice {
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--panel-2);
     }
 
+    .tactic-card {
+      scroll-margin-top: 22px;
+      padding: 16px;
+      transition: opacity .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease), transform .18s var(--ease);
+    }
+
+    .tactic-card:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-strong);
+    }
+
     .tactic-card header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .tactic-card h3 {
       margin: 0;
-      font-size: 18px;
+      font-size: 20px;
+      line-height: 1.2;
     }
 
-    .tag {
-      flex: 0 0 auto;
-      padding: 4px 8px;
-      border: 1px solid var(--line-strong);
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 850;
-      letter-spacing: .06em;
-      text-transform: uppercase;
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 9px;
     }
 
-    .tactic-card p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .steps {
+    .summary-grid {
       display: grid;
-      gap: 8px;
-      margin: 14px 0 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .steps li {
-      display: grid;
-      grid-template-columns: 28px minmax(0, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
-      align-items: start;
-      color: #dce1ed;
+      margin: 12px 0 14px;
     }
 
-    .steps b {
-      display: grid;
-      place-items: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: rgba(123, 53, 255, 0.18);
-      color: var(--purple-2);
-      font-size: 12px;
-    }
-
-    .map-placeholder {
-      min-height: 320px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background:
-        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-        #0d0f15;
-      background-size: 36px 36px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .map-placeholder::before,
-    .map-placeholder::after {
-      content: "";
-      position: absolute;
-      border: 2px solid rgba(123, 53, 255, 0.62);
-      border-radius: var(--radius);
-    }
-
-    .map-placeholder::before {
-      width: 34%;
-      height: 44%;
-      left: 12%;
-      top: 18%;
-    }
-
-    .map-placeholder::after {
-      width: 28%;
-      height: 30%;
-      right: 13%;
-      bottom: 16%;
-      border-color: rgba(83, 209, 139, 0.58);
-    }
-
-    .map-note {
-      position: absolute;
-      left: 16px;
-      bottom: 16px;
-      max-width: 420px;
+    .summary-box {
+      min-height: 92px;
       padding: 12px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: rgba(10, 11, 16, 0.84);
+      background: rgba(9, 10, 15, .38);
+    }
+
+    .summary-box strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .summary-box p {
+      margin: 0;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 14px;
+    }
+
+    .briefing {
+      display: grid;
+      gap: 8px;
+    }
+
+    .player-row {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(9, 10, 15, .34);
+      transition: opacity .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease), transform .18s var(--ease);
+    }
+
+    .player-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--player-color), transparent 35%);
+      background: color-mix(in srgb, var(--player-color), transparent 88%);
+      color: var(--player-color);
+      font-weight: 900;
+    }
+
+    .player-row p {
+      margin: 0;
+      color: #dce2ee;
+      font-size: 14px;
+    }
+
+    body[data-highlight="p1"] .player-row:not([data-player="p1"]),
+    body[data-highlight="p2"] .player-row:not([data-player="p2"]),
+    body[data-highlight="p3"] .player-row:not([data-player="p3"]),
+    body[data-highlight="p4"] .player-row:not([data-player="p4"]),
+    body[data-highlight="p5"] .player-row:not([data-player="p5"]) {
+      opacity: .38;
+    }
+
+    body[data-highlight="p1"] .player-row[data-player="p1"],
+    body[data-highlight="p2"] .player-row[data-player="p2"],
+    body[data-highlight="p3"] .player-row[data-player="p3"],
+    body[data-highlight="p4"] .player-row[data-player="p4"],
+    body[data-highlight="p5"] .player-row[data-player="p5"] {
+      border-color: color-mix(in srgb, var(--player-color), transparent 18%);
+      background: color-mix(in srgb, var(--player-color), transparent 89%);
+      transform: translateX(2px);
+    }
+
+    .image-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .image-card {
+      overflow: hidden;
+    }
+
+    .image-card header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .image-card h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .image-card button {
+      min-height: 34px;
+      padding: 7px 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .04);
+      cursor: pointer;
+      font-weight: 750;
+    }
+
+    .image-card button:hover {
+      border-color: var(--accent);
+      background: rgba(123, 53, 255, .14);
+    }
+
+    .image-preview {
+      display: block;
+      width: 100%;
+      max-height: 72vh;
+      object-fit: contain;
+      background: #0c0f15;
+      cursor: zoom-in;
+    }
+
+    .notice {
+      padding: 18px;
+      color: var(--muted);
+    }
+
+    .notice strong {
+      display: block;
+      color: var(--text);
+      font-size: 18px;
+      margin-bottom: 6px;
     }
 
     .legend-panel {
@@ -466,13 +628,13 @@
       border-radius: var(--radius);
       color: var(--muted);
       text-decoration: none;
-      transition: border-color .18s var(--ease), background .18s var(--ease), color .18s var(--ease), transform .18s var(--ease);
+      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease), color .18s var(--ease);
     }
 
     .legend-list a:hover {
       transform: translateY(-1px);
-      border-color: var(--purple);
-      background: rgba(123, 53, 255, 0.12);
+      border-color: var(--accent);
+      background: rgba(123, 53, 255, .12);
       color: var(--text);
     }
 
@@ -482,18 +644,89 @@
       text-transform: uppercase;
     }
 
-    .empty-state {
-      min-height: 220px;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      border: 1px dashed var(--line-strong);
-      border-radius: var(--radius);
-      color: var(--muted);
-      text-align: center;
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      background: rgba(2, 3, 7, .88);
+      backdrop-filter: blur(8px);
     }
 
-    @media (max-width: 980px) {
+    .modal.is-open {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .modal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(9, 10, 15, .92);
+    }
+
+    .modal-title {
+      font-weight: 850;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .modal-actions button {
+      min-width: 40px;
+      min-height: 38px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--panel-2);
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    .modal-stage {
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .modal-stage.is-dragging {
+      cursor: grabbing;
+    }
+
+    .modal-stage img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      max-width: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      transform-origin: center;
+      will-change: transform;
+    }
+
+    @media (max-width: 1080px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .legend-panel {
+        position: relative;
+        top: auto;
+        order: -1;
+      }
+
+      .legend-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 920px) {
       .shell {
         display: block;
       }
@@ -515,7 +748,7 @@
       }
 
       .map-list,
-      .quick-list {
+      .role-list {
         display: flex;
         gap: 8px;
         overflow-x: auto;
@@ -524,9 +757,14 @@
       }
 
       .map-button,
-      .quick-button {
+      .role-button {
         min-width: 210px;
         scroll-snap-align: start;
+      }
+
+      .player-legend {
+        grid-template-columns: repeat(5, max-content);
+        overflow-x: auto;
       }
 
       .main {
@@ -536,39 +774,26 @@
       .mobile-logo {
         display: block;
       }
-
-      .workspace {
-        grid-template-columns: 1fr;
-      }
-
-      .legend-panel {
-        position: relative;
-        top: auto;
-        order: -1;
-      }
-
-      .legend-list {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
     }
 
-    @media (max-width: 680px) {
-      .topbar {
-        align-items: flex-start;
+    @media (max-width: 720px) {
+      .toolbar,
+      .map-header,
+      .tactic-card header,
+      .image-card header {
+        display: block;
       }
 
-      .map-header {
-        display: block;
-        padding: 18px;
+      .field {
+        margin-top: 10px;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
       }
 
       .legend-list {
         grid-template-columns: 1fr;
-      }
-
-      .tactic-card header {
-        align-items: flex-start;
-        flex-direction: column;
       }
     }
 
@@ -581,10 +806,13 @@
         padding: 14px;
       }
 
+      h1 {
+        font-size: 34px;
+      }
     }
   </style>
 </head>
-<body>
+<body data-highlight="all">
   <div class="shell">
     <aside class="sidebar" aria-label="Nawigacja po taktykach">
       <div class="brand">
@@ -599,7 +827,16 @@
       <nav class="map-list" id="mapList" aria-label="Lista map"></nav>
 
       <div class="nav-label">Podkategorie</div>
-      <div class="quick-list" id="quickList"></div>
+      <nav class="role-list" id="roleList" aria-label="Podkategorie"></nav>
+
+      <div class="nav-label">Kolory pozycji</div>
+      <div class="player-legend" aria-label="Legenda graczy">
+        <div class="player-chip" style="--player-color: var(--p1)"><span class="dot"></span>P1 Zielony</div>
+        <div class="player-chip" style="--player-color: var(--p2)"><span class="dot"></span>P2 Niebieski</div>
+        <div class="player-chip" style="--player-color: var(--p3)"><span class="dot"></span>P3 Zolty</div>
+        <div class="player-chip" style="--player-color: var(--p4)"><span class="dot"></span>P4 Fioletowy</div>
+        <div class="player-chip" style="--player-color: var(--p5)"><span class="dot"></span>P5 Pomaranczowy</div>
+      </div>
     </aside>
 
     <main class="main">
@@ -611,119 +848,245 @@
         <img class="mobile-logo" src="assets/logo.png" alt="" />
       </section>
 
+      <section class="toolbar" aria-label="Filtry widoku">
+        <div class="toolbar-title">
+          <strong id="viewLabel">Terro</strong>
+          <span id="viewHint">Podswietl gracza, zeby szybciej czytac swoje zadania.</span>
+        </div>
+        <label class="field">
+          Podswietlenie
+          <select id="highlightSelect">
+            <option value="all">Wszyscy</option>
+            <option value="p1">P1 Zielony</option>
+            <option value="p2">P2 Niebieski</option>
+            <option value="p3">P3 Zolty</option>
+            <option value="p4">P4 Fioletowy</option>
+            <option value="p5">P5 Pomaranczowy</option>
+          </select>
+        </label>
+      </section>
+
       <section class="workspace">
         <article class="content-panel">
           <header class="map-header">
             <div>
               <h2 id="mapTitle">Mirage</h2>
-              <p id="mapDescription">Domyslna kategoria testowa.</p>
+              <p id="mapDescription"></p>
             </div>
             <span class="tag" id="mapStatus">Draft</span>
           </header>
-
           <div class="section" id="contentSection"></div>
         </article>
 
-        <aside class="legend-panel" aria-label="Legenda taktyk">
-          <h2>Legenda</h2>
-          <p>Skoki do konkretnych taktyk w aktywnej mapie i podkategorii.</p>
+        <aside class="legend-panel" aria-label="Spis taktyk">
+          <h2>Skoki</h2>
+          <p>Lista taktyk albo grafik w aktywnej podkategorii.</p>
           <ul class="legend-list" id="legendList"></ul>
         </aside>
       </section>
     </main>
   </div>
 
+  <div class="modal" id="imageModal" aria-hidden="true">
+    <div class="modal-bar">
+      <div class="modal-title" id="modalTitle">Mapa</div>
+      <div class="modal-actions">
+        <button type="button" data-modal-action="zoom-out" aria-label="Pomniejsz">-</button>
+        <button type="button" data-modal-action="reset" aria-label="Reset">Reset</button>
+        <button type="button" data-modal-action="zoom-in" aria-label="Powieksz">+</button>
+        <button type="button" data-modal-action="close" aria-label="Zamknij">X</button>
+      </div>
+    </div>
+    <div class="modal-stage" id="modalStage">
+      <img id="modalImage" alt="" />
+    </div>
+  </div>
+
   <script>
     const roles = [
-      { id: "ct", label: "Counter-Terrorists", short: "CT" },
-      { id: "t", label: "Terrorists", short: "T" },
-      { id: "map", label: "Mapa", short: "MAP" }
+      { id: "t", label: "Terro", meta: "taktyki i briefing" },
+      { id: "ct", label: "Counter-Terrorists", meta: "grafiki ustawien" },
+      { id: "map", label: "Mapa", meta: "callouty i poglad" }
     ];
+
+    const playerColors = {
+      p1: "var(--p1)",
+      p2: "var(--p2)",
+      p3: "var(--p3)",
+      p4: "var(--p4)",
+      p5: "var(--p5)"
+    };
 
     const strats = [
       {
         id: "mirage",
         name: "Mirage",
-        status: "Draft",
-        description: "Pierwsza mapa testowa. Po podeslaniu linkow podmienimy placeholdery na pelne taktyki.",
+        status: "grafiki gotowe",
+        description: "Link do dokumentu Mirage blokuje eksport tekstu. Grafiki CT i mapa sa juz podpiete.",
         sections: {
+          t: [],
           ct: [
-            {
-              id: "mirage-ct-default",
-              title: "Default CT",
-              type: "setup",
-              summary: "Miejsce na bazowe ustawienie CT, rotacje i reakcje na kontakt.",
-              steps: ["Opis pozycji startowych.", "Trigger do rotacji.", "Najwazniejsze info na voice."]
-            },
-            {
-              id: "mirage-ct-retake-a",
-              title: "Retake A",
-              type: "retake",
-              summary: "Miejsce na granaty, timing wejscia i kolejnosc czyszczenia site.",
-              steps: ["Flash z CT.", "Smoke jungle albo ticket.", "Wejscie parami, trade priorytet."]
-            }
-          ],
-          t: [
-            {
-              id: "mirage-t-default",
-              title: "Default T",
-              type: "exec",
-              summary: "Miejsce na domyslna kontrole mapy i przejscie do koncowego calla.",
-              steps: ["Kontrola mida.", "Info z rampy i palace.", "Decyzja po pierwszym kontakcie."]
-            },
-            {
-              id: "mirage-t-a-exec",
-              title: "A Execute",
-              type: "execute",
-              summary: "Miejsce na smoke, molly, flash i wejscie na A.",
-              steps: ["Smoke stairs, jungle, CT.", "Molly default albo under balcony.", "Entry i plant pod ustalona pozycje."]
-            }
+            { id: "mirage-ct-setup", title: "Ustawienia CT Mirage", image: "assets/maps/mirage-ct.png", note: "Kliknij grafike, zeby powiekszyc i przesuwac." }
           ],
           map: [
-            {
-              id: "mirage-map-callouts",
-              title: "Callouty i timing",
-              type: "info",
-              summary: "Tu pojawi sie mapa z opisami, screenami albo linkami do grafik.",
-              steps: []
-            }
+            { id: "mirage-callouts", title: "Mapa Mirage - callouty", image: "assets/maps/mirage-map.png", note: "Mapa pogladowa do szybkiego odnajdywania miejscowek." }
           ]
         }
       },
       {
-        id: "inferno",
-        name: "Inferno",
-        status: "Puste",
-        description: "Gotowa kategoria na kolejne taktyki.",
-        sections: { ct: [], t: [], map: [] }
-      },
-      {
-        id: "nuke",
-        name: "Nuke",
-        status: "Puste",
-        description: "Gotowa kategoria na kolejne taktyki.",
-        sections: { ct: [], t: [], map: [] }
+        id: "cache",
+        name: "Cache",
+        status: "Terro uzupelnione",
+        description: "Taktyki T z dokumentu Google Docs, CT i mapa jako grafiki.",
+        sections: {
+          t: [
+            {
+              id: "cache-pistol-a",
+              title: "1. Pistol A",
+              type: "pistol",
+              objective: "Kontrola mida, wejscie A.",
+              grenades: "Brak obowiazkowych granatow.",
+              play: "P5 boostuje P4. P1, P2 i P4 ida A main i czekaja na znak. P3 idzie drzwi i tez czeka na znak. Na znak wszyscy wjazd.",
+              players: {
+                p1: "Nic nie kupuj, idziesz A main i po cichu czekasz na znak. Po znaku wjezdzasz drugi i idziesz wozek jesli mozesz.",
+                p2: "Nic nie kupuj, idziesz A main i po cichu czekasz na znak. Po znaku wjezdzasz pierwszy, idziesz site i quad.",
+                p3: "Nic nie kupuj, idziesz drzwi i cicho czekasz na znak. Po znaku wjezdzasz, a gdy site jest oczyszczony wracasz do drzwi.",
+                p4: "Idziesz boost i dajesz znak wjazdu na A.",
+                p5: "Boostujesz P4, idziesz A main i czekasz na znak. Po znaku wjezdzasz jako trzeci na site, plantujesz C4, cofasz sie do maina i kontrolujesz plecy."
+              }
+            },
+            {
+              id: "cache-pistol-mid",
+              title: "2. Pistol Mid",
+              type: "pistol",
+              objective: "Wejscie na mida, potem najczesciej A. W rundzie mozliwa zmiana na B.",
+              grenades: "P3 smoke.",
+              play: "P1, P3 i P5 ida mida, ale wchodza po znaku. P4 idzie boost, P2 go boostuje i po cichu czeka w A main.",
+              players: {
+                p1: "Nic nie kupuj, idziesz garaz i czekasz na znak. Po znaku wjezdzasz pierwszy i idziesz dach.",
+                p2: "Nic nie kupuj, boostujesz P4 i idziesz po cichu A main. Czekasz, peekujesz dopiero kiedy bedzie podejscie A.",
+                p3: "Trzy sekundy po rozpoczeciu rundy smokujesz Z. Idziesz garaz i na znak wchodzisz trzeci na mida.",
+                p4: "Zostajesz boostowany przez P2 i dajesz znak na wejscie mida.",
+                p5: "Idziesz garaz po cichu i czekasz na znak do wjazdu mida. Wjezdzasz drugi, masz C4."
+              }
+            },
+            {
+              id: "cache-pistol-b",
+              title: "3. Pistol B",
+              type: "pistol",
+              objective: "Wejscie w B po smokach.",
+              grenades: "P1 smoke. P3 smoke i flash.",
+              play: "Wszyscy ida B main. Bez rusha, najpierw zabezpieczenie. P3 smokuje i flashuje na znak, po flashu wjazd.",
+              players: {
+                p1: "Idziesz B main, dropasz tam smoka dla P4, grasz cicho i czekasz na flasha. Po nim wchodzisz drugi na site.",
+                p2: "Idziesz B main i po cichu patrzysz plecy. Jak P3 zaczyna smokowac, przygotuj sie, bo po flashu wchodzisz czwarty na site.",
+                p3: "Idziesz sunroom, grasz cicho. Na znak rzucasz dwa smoke i flasha. Na site wchodzisz piaty jesli trzeba, inaczej idziesz ventroom i coverujesz plecy.",
+                p4: "Po cichu wchodzisz B main, dajesz znak na granaty, po flashu wchodzisz pierwszy.",
+                p5: "Masz bombe. Idziesz cicho na B main, czekasz na flasha i po flashu wchodzisz trzeci."
+              }
+            },
+            {
+              id: "cache-split-a",
+              title: "4. Split A",
+              type: "full buy",
+              objective: "Zajecie mida i wejscie na A od mida oraz A main.",
+              grenades: "Wszyscy wszystko full.",
+              play: "P1, P3 i P4 zajmuja mida po smokach. P2 i P5 czekaja A main i wchodza po przejeciu mida.",
+              players: {
+                p1: "Idziesz garaz, czekasz na znak, po znaku idziesz dach, a nastepnie raczej na highway pod A.",
+                p2: "Po cichu idziesz A main, czekasz na przejecie mida i gdy z mida beda wchodzic na A, ty tez wchodzisz.",
+                p3: "Rzucasz smoke na cona i wchodzisz pierwszy na mida. Zalecana AWP. Otrzymasz dwa smoke od P5 na spawnie.",
+                p4: "Rzucasz smoke na okno, wchodzisz drugi mida. Otrzymasz smoke od P1 na spawnie.",
+                p5: "Po cichu idziesz A main, czekasz na przejecie mida i gdy z mida beda wchodzic na A, ty tez. Bierzesz C4."
+              }
+            },
+            {
+              id: "cache-default-mid",
+              title: "5. Default Mid",
+              type: "default",
+              objective: "Wejscie na mida i po jego przejeciu przejscie na jeden z siteow.",
+              grenades: "Wszyscy wszystko full.",
+              play: "P1 lurk B main/B halls/Sunroom. P2 lurk A main. P3, P4 i P5 przejmuja mida, potem IGL decyduje, ktory site wchodzicie.",
+              players: {
+                p1: "Idziesz B main/B halls/Sunroom, nie peekujesz, czekasz na pusha CT. Przy callu MID na B wchodzisz synchronicznie; przy callu A robisz CT plecy.",
+                p2: "Idziesz A main, nie peekujesz, czekasz na pusha CT. Przy callu MID na A wchodzisz synchronicznie; przy callu B robisz CT plecy. Na spawn dropnij smoke dla P3.",
+                p3: "Na znak smokujesz Z, dostaniesz dwa smoke od P2 na pozniej. Idziesz mida i na znak wchodzisz pierwszy, sluchasz IGL-a.",
+                p4: "Idziesz boost, grasz safe i dajesz znak do wejscia na mida.",
+                p5: "Idziesz garaz, czekasz na znak od IGL-a. Na znak wchodzisz mid drugi i dalej robisz to, co mowi IGL."
+              }
+            },
+            {
+              id: "cache-default-b",
+              title: "6. Default B",
+              type: "default",
+              objective: "Zajecie B po pelnym zestawie smoke.",
+              grenades: "Wszyscy wszystko full.",
+              play: "Wszyscy ida B main, ale nikt nie pushuje. Nie chcecie zostac zauwazeni. P3 rzuca lineup granatow i po drugim flashu jest wjazd.",
+              players: {
+                p1: "Idziesz B main, dropasz tam smoka dla P4, grasz cicho i czekasz na drugiego flasha. Po nim wchodzisz drugi na site.",
+                p2: "Idziesz B main i po cichu patrzysz plecy. Jak P3 zaczyna smokowac, przygotuj sie, bo po drugim flashu wchodzisz czwarty na site.",
+                p3: "Idziesz sunroom, grasz cicho. Na znak rzucasz dwa smoke i dwa flashe. Na site wchodzisz piaty jesli trzeba, inaczej idziesz ventroom i coverujesz plecy.",
+                p4: "Po cichu wchodzisz B main, dajesz znak na granaty i po drugim flashu wchodzisz pierwszy.",
+                p5: "Masz bombe. Idziesz cicho na B main, czekasz na drugiego flasha, po flashu wchodzisz trzeci."
+              }
+            },
+            {
+              id: "cache-default-a",
+              title: "7. Default A",
+              type: "default",
+              objective: "Pelne wejscie na A z A main i drzwi.",
+              grenades: "Wszyscy wszystko full.",
+              play: "P1 i P2 ida drzwi po cichu. P3 i P4 ida A main po cichu. P5 smokuje highway na znak, potem na drugi znak wejscie. Miejscowki po przejeciu site sa pogladowe.",
+              players: {
+                p1: "Idziesz po cichu drzwi, ale ich nie otwierasz. Czekasz na znak wejscia i wchodzisz pierwszy na site w strone quada jesli sie da.",
+                p2: "Idziesz po cichu drzwi, ale ich nie otwierasz. Czekasz na znak wejscia i wchodzisz drugi. Jesli site przejety, cofasz do drzwi albo wchodzisz na boxy.",
+                p3: "Idziesz A main i czekasz na znak wjazdu. Po wjezdzie, jesli macie site, wracasz do A main i patrzysz plecy albo grasz z A maina.",
+                p4: "Idziesz A main i dajesz znak na smoke, potem znak na wjazd. Wchodzisz drugi i zostajesz wozek.",
+                p5: "Dropasz C4 u gory schodkow, wracasz beczke i na znak smokujesz. Bierzesz C4, na znak wjezdzasz trzeci, plantujesz i grasz defensywnie na site."
+              }
+            }
+          ],
+          ct: [
+            { id: "cache-ct-setup", title: "Ustawienia CT Cache", image: "assets/maps/cache-ct.png", note: "Role jak na Mirage, grafika do powiekszenia i przesuwania." }
+          ],
+          map: [
+            { id: "cache-callouts", title: "Mapa Cache - callouty", image: "assets/maps/cache-map.png", note: "Mapa pogladowa do szybkiego odnajdywania miejscowek." }
+          ]
+        }
       }
     ];
 
     const state = {
-      map: strats[0].id,
-      role: roles[0].id
+      map: "cache",
+      role: "t"
     };
 
     const mapList = document.querySelector("#mapList");
-    const quickList = document.querySelector("#quickList");
+    const roleList = document.querySelector("#roleList");
     const contentSection = document.querySelector("#contentSection");
     const legendList = document.querySelector("#legendList");
     const mapTitle = document.querySelector("#mapTitle");
     const mapDescription = document.querySelector("#mapDescription");
     const mapStatus = document.querySelector("#mapStatus");
+    const viewLabel = document.querySelector("#viewLabel");
+    const viewHint = document.querySelector("#viewHint");
+    const highlightSelect = document.querySelector("#highlightSelect");
+
+    const imageModal = document.querySelector("#imageModal");
+    const modalStage = document.querySelector("#modalStage");
+    const modalImage = document.querySelector("#modalImage");
+    const modalTitle = document.querySelector("#modalTitle");
+    const modalState = { scale: 1, x: 0, y: 0, dragging: false, startX: 0, startY: 0 };
 
     function getActiveMap() {
       return strats.find((map) => map.id === state.map) || strats[0];
     }
 
-    function countTactics(map) {
+    function getActiveRole() {
+      return roles.find((role) => role.id === state.role) || roles[0];
+    }
+
+    function countItems(map) {
       return roles.reduce((total, role) => total + (map.sections[role.id] || []).length, 0);
     }
 
@@ -734,65 +1097,96 @@
             <span class="map-name">${map.name}</span>
             <span class="map-meta">${map.status}</span>
           </span>
-          <span class="map-count">${countTactics(map)}</span>
+          <span class="map-count">${countItems(map)}</span>
         </button>
       `).join("");
     }
 
-    function renderQuickList() {
+    function renderRoles() {
       const map = getActiveMap();
-      quickList.innerHTML = roles.map((role) => {
+      roleList.innerHTML = roles.map((role) => {
         const amount = (map.sections[role.id] || []).length;
         return `
-          <button class="quick-button ${role.id === state.role ? "is-active" : ""}" type="button" data-role="${role.id}">
-            <span>${role.label}</span>
-            <small>${amount} wpisy</small>
+          <button class="role-button ${role.id === state.role ? "is-active" : ""}" type="button" data-role="${role.id}">
+            <span class="role-name">${role.label}</span>
+            <span class="role-meta">${amount} wpisy - ${role.meta}</span>
           </button>
         `;
       }).join("");
     }
 
+    function renderTacticCard(tactic) {
+      const playerRows = Object.entries(tactic.players).map(([player, text]) => `
+        <div class="player-row" data-player="${player}" style="--player-color: ${playerColors[player]}">
+          <span class="player-label">${player.toUpperCase()}</span>
+          <p>${text}</p>
+        </div>
+      `).join("");
+
+      return `
+        <article class="tactic-card" id="${tactic.id}">
+          <header>
+            <div>
+              <h3>${tactic.title}</h3>
+              <div class="card-meta">
+                <span class="tag">${tactic.type}</span>
+                ${Object.keys(tactic.players).map((player) => `<span class="tag" data-player="${player}" style="--player-color: ${playerColors[player]}">${player.toUpperCase()}</span>`).join("")}
+              </div>
+            </div>
+          </header>
+          <div class="summary-grid">
+            <div class="summary-box"><strong>Cel</strong><p>${tactic.objective}</p></div>
+            <div class="summary-box"><strong>Granaty</strong><p>${tactic.grenades}</p></div>
+            <div class="summary-box"><strong>Rozegranie</strong><p>${tactic.play}</p></div>
+          </div>
+          <div class="briefing">${playerRows}</div>
+        </article>
+      `;
+    }
+
+    function renderImageCard(item) {
+      return `
+        <article class="image-card" id="${item.id}">
+          <header>
+            <div>
+              <h3>${item.title}</h3>
+              <span class="map-meta">${item.note}</span>
+            </div>
+            <button type="button" data-open-image="${item.image}" data-title="${item.title}">Powieksz</button>
+          </header>
+          <img class="image-preview" src="${item.image}" alt="${item.title}" data-open-image="${item.image}" data-title="${item.title}" />
+        </article>
+      `;
+    }
+
     function renderContent() {
       const map = getActiveMap();
-      const role = roles.find((item) => item.id === state.role);
+      const role = getActiveRole();
       const entries = map.sections[state.role] || [];
 
       mapTitle.textContent = map.name;
       mapDescription.textContent = map.description;
       mapStatus.textContent = map.status;
+      viewLabel.textContent = role.label;
+      viewHint.textContent = state.role === "t"
+        ? "Wybierz P1-P5, zeby podbic swoje zadania i przygaszac reszte."
+        : "Kliknij grafike, potem scroll/pinch do zoomu i przeciaganie do przesuwania.";
 
       if (!entries.length) {
         contentSection.innerHTML = `
-          <div class="empty-state">
-            <div>
-              <strong>Brak wpisow w ${role.label}</strong>
-              <p>Po podeslaniu Google Docs dodamy tutaj realne taktyki, granaty, screeny i szybkie skoki.</p>
-            </div>
+          <div class="notice">
+            <strong>Brak tekstu taktyk w tej sekcji</strong>
+            <span>Drugi dokument Google Docs zwraca 401 przy eksporcie, wiec nie da sie jeszcze pobrac jego tresci automatycznie. Po zmianie udostepnienia na "kazdy z linkiem moze wyswietlac" uzupelnie to bez przebudowy strony.</span>
           </div>
         `;
         return;
       }
 
-      const cards = entries.map((entry) => `
-        <article class="tactic-card" id="${entry.id}">
-          <header>
-            <h3>${entry.title}</h3>
-            <span class="tag">${entry.type}</span>
-          </header>
-          <p>${entry.summary}</p>
-          ${entry.steps.length ? `
-            <ol class="steps">
-              ${entry.steps.map((step, index) => `<li><b>${index + 1}</b><span>${step}</span></li>`).join("")}
-            </ol>
-          ` : `
-            <div class="map-placeholder">
-              <div class="map-note">Placeholder pod grafike mapy, callouty albo screen z rozpiska. W finalnej wersji mozemy tu wstawic obrazki i punkty na mapie.</div>
-            </div>
-          `}
-        </article>
-      `).join("");
-
-      contentSection.innerHTML = `<div class="tactic-grid">${cards}</div>`;
+      if (state.role === "t") {
+        contentSection.innerHTML = `<div class="tactic-grid">${entries.map(renderTacticCard).join("")}</div>`;
+      } else {
+        contentSection.innerHTML = `<div class="image-grid">${entries.map(renderImageCard).join("")}</div>`;
+      }
     }
 
     function renderLegend() {
@@ -800,7 +1194,7 @@
       const entries = map.sections[state.role] || [];
 
       if (!entries.length) {
-        legendList.innerHTML = `<li><span class="tag">Brak skrotow</span></li>`;
+        legendList.innerHTML = `<li><span class="tag">Brak wpisow</span></li>`;
         return;
       }
 
@@ -808,7 +1202,7 @@
         <li>
           <a href="#${entry.id}">
             <span>${entry.title}</span>
-            <small>${entry.type}</small>
+            <small>${entry.type || "grafika"}</small>
           </a>
         </li>
       `).join("");
@@ -816,9 +1210,10 @@
 
     function render() {
       renderMaps();
-      renderQuickList();
+      renderRoles();
       renderContent();
       renderLegend();
+      document.body.dataset.highlight = highlightSelect.value;
     }
 
     function switchView(next) {
@@ -830,17 +1225,101 @@
       }, 140);
     }
 
+    function applyModalTransform() {
+      modalImage.style.transform = `translate(calc(-50% + ${modalState.x}px), calc(-50% + ${modalState.y}px)) scale(${modalState.scale})`;
+    }
+
+    function openImage(src, title) {
+      modalImage.src = src;
+      modalImage.alt = title;
+      modalTitle.textContent = title;
+      modalState.scale = 1;
+      modalState.x = 0;
+      modalState.y = 0;
+      imageModal.classList.add("is-open");
+      imageModal.setAttribute("aria-hidden", "false");
+      applyModalTransform();
+    }
+
+    function closeImage() {
+      imageModal.classList.remove("is-open");
+      imageModal.setAttribute("aria-hidden", "true");
+      modalImage.src = "";
+    }
+
+    function zoomImage(delta) {
+      modalState.scale = Math.min(5, Math.max(.45, modalState.scale + delta));
+      applyModalTransform();
+    }
+
     document.addEventListener("click", (event) => {
       const mapButton = event.target.closest("[data-map]");
       const roleButton = event.target.closest("[data-role]");
+      const imageButton = event.target.closest("[data-open-image]");
+      const modalAction = event.target.closest("[data-modal-action]");
 
       if (mapButton) {
-        switchView({ map: mapButton.dataset.map, role: "ct" });
+        switchView({ map: mapButton.dataset.map, role: "t" });
       }
 
       if (roleButton) {
         switchView({ role: roleButton.dataset.role });
       }
+
+      if (imageButton) {
+        openImage(imageButton.dataset.openImage, imageButton.dataset.title || "Mapa");
+      }
+
+      if (modalAction) {
+        const action = modalAction.dataset.modalAction;
+        if (action === "close") closeImage();
+        if (action === "zoom-in") zoomImage(.25);
+        if (action === "zoom-out") zoomImage(-.25);
+        if (action === "reset") {
+          modalState.scale = 1;
+          modalState.x = 0;
+          modalState.y = 0;
+          applyModalTransform();
+        }
+      }
+    });
+
+    highlightSelect.addEventListener("change", () => {
+      document.body.dataset.highlight = highlightSelect.value;
+    });
+
+    modalStage.addEventListener("wheel", (event) => {
+      if (!imageModal.classList.contains("is-open")) return;
+      event.preventDefault();
+      zoomImage(event.deltaY > 0 ? -.12 : .12);
+    }, { passive: false });
+
+    modalStage.addEventListener("pointerdown", (event) => {
+      if (!imageModal.classList.contains("is-open")) return;
+      modalState.dragging = true;
+      modalState.startX = event.clientX - modalState.x;
+      modalState.startY = event.clientY - modalState.y;
+      modalStage.classList.add("is-dragging");
+      modalStage.setPointerCapture(event.pointerId);
+    });
+
+    modalStage.addEventListener("pointermove", (event) => {
+      if (!modalState.dragging) return;
+      modalState.x = event.clientX - modalState.startX;
+      modalState.y = event.clientY - modalState.startY;
+      applyModalTransform();
+    });
+
+    modalStage.addEventListener("pointerup", (event) => {
+      modalState.dragging = false;
+      modalStage.classList.remove("is-dragging");
+      if (modalStage.hasPointerCapture(event.pointerId)) {
+        modalStage.releasePointerCapture(event.pointerId);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeImage();
     });
 
     render();

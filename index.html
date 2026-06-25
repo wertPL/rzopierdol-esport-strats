@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rzopierdol Esport - Taktyki CS</title>
+  <meta name="description" content="Panel taktyk Counter-Strike dla Rzopierdol Esport." />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a0b10;
+      --panel: #11131b;
+      --panel-2: #171a24;
+      --line: #292d3a;
+      --line-strong: #3b4153;
+      --text: #f4f5f8;
+      --muted: #a6adbd;
+      --soft: #747d91;
+      --purple: #7b35ff;
+      --purple-2: #a375ff;
+      --green: #53d18b;
+      --orange: #f1a34d;
+      --danger: #e65f6c;
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.38);
+      --radius: 8px;
+      --ease: cubic-bezier(.2, .9, .2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(123, 53, 255, 0.10), transparent 260px),
+        radial-gradient(circle at top right, rgba(83, 209, 139, 0.08), transparent 300px),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 292px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 22px 18px;
+      border-right: 1px solid var(--line);
+      background: rgba(10, 11, 16, 0.88);
+      backdrop-filter: blur(18px);
+      overflow: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .brand img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #05060a;
+      box-shadow: 0 0 0 4px rgba(123, 53, 255, 0.08);
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 16px;
+      line-height: 1.15;
+    }
+
+    .brand span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .nav-label {
+      margin: 22px 6px 10px;
+      color: var(--soft);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .map-list,
+    .quick-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .map-button,
+    .quick-button,
+    .role-button {
+      width: 100%;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      background: transparent;
+      cursor: pointer;
+      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease), color .18s var(--ease);
+    }
+
+    .map-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 52px;
+      padding: 10px 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    .map-button:hover,
+    .quick-button:hover,
+    .role-button:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-strong);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+    }
+
+    .map-button.is-active {
+      border-color: rgba(123, 53, 255, 0.58);
+      background: rgba(123, 53, 255, 0.14);
+      color: var(--text);
+    }
+
+    .map-name {
+      display: block;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .map-meta {
+      display: block;
+      margin-top: 2px;
+      color: var(--soft);
+      font-size: 12px;
+    }
+
+    .map-count {
+      min-width: 30px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .quick-button {
+      padding: 10px 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    .quick-button span {
+      display: block;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .quick-button small {
+      display: block;
+      margin-top: 2px;
+      color: var(--soft);
+      font-size: 12px;
+    }
+
+    .main {
+      min-width: 0;
+      padding: 26px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .mobile-logo {
+      display: none;
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      border-radius: var(--radius);
+      background: #05060a;
+      border: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: var(--purple-2);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 20px rgba(83, 209, 139, 0.7);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 72px);
+      line-height: .96;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 820px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .status-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .stat {
+      min-height: 86px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(17, 19, 27, 0.82);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .content-panel,
+    .legend-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(17, 19, 27, 0.86);
+      box-shadow: var(--shadow);
+    }
+
+    .content-panel {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .map-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent);
+    }
+
+    .map-header h2 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .map-header p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .role-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    .role-button {
+      min-height: 46px;
+      padding: 9px 10px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .role-button.is-active {
+      border-color: rgba(83, 209, 139, 0.52);
+      background: rgba(83, 209, 139, 0.12);
+      color: var(--text);
+    }
+
+    .section {
+      padding: 18px;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .22s var(--ease), transform .22s var(--ease);
+    }
+
+    .section.is-switching {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    .tactic-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tactic-card {
+      scroll-margin-top: 22px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel-2);
+    }
+
+    .tactic-card header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .tactic-card h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .tag {
+      flex: 0 0 auto;
+      padding: 4px 8px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .tactic-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .steps {
+      display: grid;
+      gap: 8px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .steps li {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      color: #dce1ed;
+    }
+
+    .steps b {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(123, 53, 255, 0.18);
+      color: var(--purple-2);
+      font-size: 12px;
+    }
+
+    .map-placeholder {
+      min-height: 320px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        #0d0f15;
+      background-size: 36px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-placeholder::before,
+    .map-placeholder::after {
+      content: "";
+      position: absolute;
+      border: 2px solid rgba(123, 53, 255, 0.62);
+      border-radius: var(--radius);
+    }
+
+    .map-placeholder::before {
+      width: 34%;
+      height: 44%;
+      left: 12%;
+      top: 18%;
+    }
+
+    .map-placeholder::after {
+      width: 28%;
+      height: 30%;
+      right: 13%;
+      bottom: 16%;
+      border-color: rgba(83, 209, 139, 0.58);
+    }
+
+    .map-note {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      max-width: 420px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(10, 11, 16, 0.84);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend-panel {
+      position: sticky;
+      top: 18px;
+      padding: 16px;
+    }
+
+    .legend-panel h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .legend-panel p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .legend-list a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 42px;
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      text-decoration: none;
+      transition: border-color .18s var(--ease), background .18s var(--ease), color .18s var(--ease), transform .18s var(--ease);
+    }
+
+    .legend-list a:hover {
+      transform: translateY(-1px);
+      border-color: var(--purple);
+      background: rgba(123, 53, 255, 0.12);
+      color: var(--text);
+    }
+
+    .legend-list small {
+      color: var(--soft);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .empty-state {
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .shell {
+        display: block;
+      }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+        padding: 14px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brand {
+        display: none;
+      }
+
+      .nav-label {
+        margin-top: 8px;
+      }
+
+      .map-list,
+      .quick-list {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scroll-snap-type: x proximity;
+      }
+
+      .map-button,
+      .quick-button {
+        min-width: 210px;
+        scroll-snap-align: start;
+      }
+
+      .main {
+        padding: 18px;
+      }
+
+      .mobile-logo {
+        display: block;
+      }
+
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .legend-panel {
+        position: relative;
+        top: auto;
+        order: -1;
+      }
+
+      .legend-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .status-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .map-header {
+        display: block;
+        padding: 18px;
+      }
+
+      .role-tabs {
+        grid-template-columns: 1fr;
+      }
+
+      .legend-list {
+        grid-template-columns: 1fr;
+      }
+
+      .tactic-card header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-height: 520px) and (orientation: landscape) {
+      .sidebar {
+        padding: 10px 14px;
+      }
+
+      .main {
+        padding: 14px;
+      }
+
+      .status-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .stat {
+        min-height: 66px;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Nawigacja po taktykach">
+      <div class="brand">
+        <img src="assets/logo.png" alt="Rzopierdol Esport logo" />
+        <div>
+          <strong>Rzopierdol Esport</strong>
+          <span>CS Strats</span>
+        </div>
+      </div>
+
+      <div class="nav-label">Mapy</div>
+      <nav class="map-list" id="mapList" aria-label="Lista map"></nav>
+
+      <div class="nav-label">Szybki skok</div>
+      <div class="quick-list" id="quickList"></div>
+    </aside>
+
+    <main class="main">
+      <section class="topbar">
+        <div>
+          <div class="eyebrow">Baza taktyk</div>
+          <h1>Rzopierdol Esport</h1>
+          <p class="lead">Panel pod taktyki CS: mapy, strony, rozpiski i szybka legenda do przeskakiwania po zagrywkach. To jest baza pod dane z Google Docs.</p>
+        </div>
+        <img class="mobile-logo" src="assets/logo.png" alt="" />
+      </section>
+
+      <section class="status-strip" aria-label="Status bazy taktyk">
+        <div class="stat">
+          <strong id="statMaps">0</strong>
+          <span>mapy w bazie</span>
+        </div>
+        <div class="stat">
+          <strong id="statTactics">0</strong>
+          <span>taktyki i notatki</span>
+        </div>
+        <div class="stat">
+          <strong>3</strong>
+          <span>podkategorie: CT, T, mapa</span>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <article class="content-panel">
+          <header class="map-header">
+            <div>
+              <h2 id="mapTitle">Mirage</h2>
+              <p id="mapDescription">Domyslna kategoria testowa.</p>
+            </div>
+            <span class="tag" id="mapStatus">Draft</span>
+          </header>
+
+          <div class="role-tabs" id="roleTabs" role="tablist" aria-label="Podkategorie"></div>
+          <div class="section" id="contentSection"></div>
+        </article>
+
+        <aside class="legend-panel" aria-label="Legenda taktyk">
+          <h2>Legenda</h2>
+          <p>Skoki do konkretnych taktyk w aktywnej mapie i podkategorii.</p>
+          <ul class="legend-list" id="legendList"></ul>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const roles = [
+      { id: "ct", label: "Counter-Terrorists", short: "CT" },
+      { id: "t", label: "Terrorists", short: "T" },
+      { id: "map", label: "Mapa", short: "MAP" }
+    ];
+
+    const strats = [
+      {
+        id: "mirage",
+        name: "Mirage",
+        status: "Draft",
+        description: "Pierwsza mapa testowa. Po podeslaniu linkow podmienimy placeholdery na pelne taktyki.",
+        sections: {
+          ct: [
+            {
+              id: "mirage-ct-default",
+              title: "Default CT",
+              type: "setup",
+              summary: "Miejsce na bazowe ustawienie CT, rotacje i reakcje na kontakt.",
+              steps: ["Opis pozycji startowych.", "Trigger do rotacji.", "Najwazniejsze info na voice."]
+            },
+            {
+              id: "mirage-ct-retake-a",
+              title: "Retake A",
+              type: "retake",
+              summary: "Miejsce na granaty, timing wejscia i kolejnosc czyszczenia site.",
+              steps: ["Flash z CT.", "Smoke jungle albo ticket.", "Wejscie parami, trade priorytet."]
+            }
+          ],
+          t: [
+            {
+              id: "mirage-t-default",
+              title: "Default T",
+              type: "exec",
+              summary: "Miejsce na domyslna kontrole mapy i przejscie do koncowego calla.",
+              steps: ["Kontrola mida.", "Info z rampy i palace.", "Decyzja po pierwszym kontakcie."]
+            },
+            {
+              id: "mirage-t-a-exec",
+              title: "A Execute",
+              type: "execute",
+              summary: "Miejsce na smoke, molly, flash i wejscie na A.",
+              steps: ["Smoke stairs, jungle, CT.", "Molly default albo under balcony.", "Entry i plant pod ustalona pozycje."]
+            }
+          ],
+          map: [
+            {
+              id: "mirage-map-callouts",
+              title: "Callouty i timing",
+              type: "info",
+              summary: "Tu pojawi sie mapa z opisami, screenami albo linkami do grafik.",
+              steps: []
+            }
+          ]
+        }
+      },
+      {
+        id: "inferno",
+        name: "Inferno",
+        status: "Puste",
+        description: "Gotowa kategoria na kolejne taktyki.",
+        sections: { ct: [], t: [], map: [] }
+      },
+      {
+        id: "nuke",
+        name: "Nuke",
+        status: "Puste",
+        description: "Gotowa kategoria na kolejne taktyki.",
+        sections: { ct: [], t: [], map: [] }
+      }
+    ];
+
+    const state = {
+      map: strats[0].id,
+      role: roles[0].id
+    };
+
+    const mapList = document.querySelector("#mapList");
+    const quickList = document.querySelector("#quickList");
+    const roleTabs = document.querySelector("#roleTabs");
+    const contentSection = document.querySelector("#contentSection");
+    const legendList = document.querySelector("#legendList");
+    const mapTitle = document.querySelector("#mapTitle");
+    const mapDescription = document.querySelector("#mapDescription");
+    const mapStatus = document.querySelector("#mapStatus");
+
+    function getActiveMap() {
+      return strats.find((map) => map.id === state.map) || strats[0];
+    }
+
+    function countTactics(map) {
+      return roles.reduce((total, role) => total + (map.sections[role.id] || []).length, 0);
+    }
+
+    function renderMaps() {
+      mapList.innerHTML = strats.map((map) => `
+        <button class="map-button ${map.id === state.map ? "is-active" : ""}" type="button" data-map="${map.id}">
+          <span>
+            <span class="map-name">${map.name}</span>
+            <span class="map-meta">${map.status}</span>
+          </span>
+          <span class="map-count">${countTactics(map)}</span>
+        </button>
+      `).join("");
+    }
+
+    function renderRoles() {
+      roleTabs.innerHTML = roles.map((role) => `
+        <button class="role-button ${role.id === state.role ? "is-active" : ""}" type="button" role="tab" data-role="${role.id}">
+          ${role.label}
+        </button>
+      `).join("");
+    }
+
+    function renderQuickList() {
+      const map = getActiveMap();
+      quickList.innerHTML = roles.map((role) => {
+        const amount = (map.sections[role.id] || []).length;
+        return `
+          <button class="quick-button" type="button" data-role="${role.id}">
+            <span>${role.label}</span>
+            <small>${amount} wpisy</small>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderContent() {
+      const map = getActiveMap();
+      const role = roles.find((item) => item.id === state.role);
+      const entries = map.sections[state.role] || [];
+
+      mapTitle.textContent = map.name;
+      mapDescription.textContent = map.description;
+      mapStatus.textContent = map.status;
+
+      if (!entries.length) {
+        contentSection.innerHTML = `
+          <div class="empty-state">
+            <div>
+              <strong>Brak wpisow w ${role.label}</strong>
+              <p>Po podeslaniu Google Docs dodamy tutaj realne taktyki, granaty, screeny i szybkie skoki.</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const cards = entries.map((entry) => `
+        <article class="tactic-card" id="${entry.id}">
+          <header>
+            <h3>${entry.title}</h3>
+            <span class="tag">${entry.type}</span>
+          </header>
+          <p>${entry.summary}</p>
+          ${entry.steps.length ? `
+            <ol class="steps">
+              ${entry.steps.map((step, index) => `<li><b>${index + 1}</b><span>${step}</span></li>`).join("")}
+            </ol>
+          ` : `
+            <div class="map-placeholder">
+              <div class="map-note">Placeholder pod grafike mapy, callouty albo screen z rozpiska. W finalnej wersji mozemy tu wstawic obrazki i punkty na mapie.</div>
+            </div>
+          `}
+        </article>
+      `).join("");
+
+      contentSection.innerHTML = `<div class="tactic-grid">${cards}</div>`;
+    }
+
+    function renderLegend() {
+      const map = getActiveMap();
+      const entries = map.sections[state.role] || [];
+
+      if (!entries.length) {
+        legendList.innerHTML = `<li><span class="tag">Brak skrotow</span></li>`;
+        return;
+      }
+
+      legendList.innerHTML = entries.map((entry) => `
+        <li>
+          <a href="#${entry.id}">
+            <span>${entry.title}</span>
+            <small>${entry.type}</small>
+          </a>
+        </li>
+      `).join("");
+    }
+
+    function updateStats() {
+      document.querySelector("#statMaps").textContent = strats.length;
+      document.querySelector("#statTactics").textContent = strats.reduce((total, map) => total + countTactics(map), 0);
+    }
+
+    function render() {
+      renderMaps();
+      renderRoles();
+      renderQuickList();
+      renderContent();
+      renderLegend();
+      updateStats();
+    }
+
+    function switchView(next) {
+      contentSection.classList.add("is-switching");
+      window.setTimeout(() => {
+        Object.assign(state, next);
+        render();
+        contentSection.classList.remove("is-switching");
+      }, 140);
+    }
+
+    document.addEventListener("click", (event) => {
+      const mapButton = event.target.closest("[data-map]");
+      const roleButton = event.target.closest("[data-role]");
+
+      if (mapButton) {
+        switchView({ map: mapButton.dataset.map, role: "ct" });
+      }
+
+      if (roleButton) {
+        switchView({ role: roleButton.dataset.role });
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

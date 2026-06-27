@@ -1153,6 +1153,140 @@
             { id: "cache-callouts", title: "Mapa Cache - callouty", image: "assets/maps/cache-map.png", note: "Mapa pogladowa do szybkiego odnajdywania miejscowek." }
           ]
         }
+      },
+      {
+        id: "ancient",
+        name: "Ancient",
+        status: "8 taktyk Terro",
+        description: "Autorski zestaw T oparty na kontroli mida, Short/Donuta oraz skoordynowanych wejsciach na A i B.",
+        sections: {
+          t: [
+            {
+              id: "ancient-pistol-a",
+              title: "1. Pistol A - Main & Short",
+              type: "pistol",
+              objective: "Szybko zajac A z dwoch kierunkow i odciac rotacje z Temple.",
+              grenades: "P3 smoke CT Spawn. P5 dwa flashe nad A Main.",
+              play: "P1, P4 i P5 podchodza A Main bez peekowania. P2 z P3 naciskaja Short od mida. Po smoke i pierwszym flashu obie grupy wchodza jednoczesnie; priorytetem sa trade'y i szybki plant.",
+              players: {
+                p1: "Idziesz A Main i po pierwszym flashu wchodzisz pierwszy. Czyscisz bliski Boost, Big Box i lewa strone site'u. Nie gonisz do Temple bez trade'a.",
+                p2: "Idziesz z P3 przez mid w Short. Na call wchodzisz pierwszy od Short i odcinasz gracza Plat/Temple. Po plancie zostajesz na Short.",
+                p3: "Bierzesz smoke, idziesz w strone mida i rzucasz CT Spawn. Wchodzisz za P2, pilnujesz Snipers Nest/Temple i zabezpieczasz bombe z dystansu.",
+                p4: "Prowadzisz grupe A Main i dajesz call na granaty. Wchodzisz drugi za P1, czyscisz Plat i przejmujesz glebie site'u.",
+                p5: "Masz C4 i dwa flashe. Flashujesz nad A Main na call P4, wchodzisz trzeci i plantujesz bezpiecznie pod A Main/Short."
+              }
+            },
+            {
+              id: "ancient-pistol-b",
+              title: "2. Pistol B - Ramp Flood",
+              type: "pistol",
+              objective: "Zalac B przez Ramp, wykorzystujac przewage liczebna i szybkie trade'y.",
+              grenades: "P3 smoke Short/Lane. P5 dwa flashe nad B.",
+              play: "Czterech graczy ustawia sie Ruins/Ramp, P2 trzyma push mida i dolacza z opoznieniem. Po smoke P3 i dwoch flashach wejscie bez zatrzymywania: pierwszy czysci Pillar, drugi site, trzeci House.",
+              players: {
+                p1: "Wchodzisz pierwszy Ramp. Czyscisz bliski prawy rog i Pillar, nie zatrzymujesz sie w choke poincie.",
+                p2: "Zostajesz chwile w Water/Tunnel i pilnujesz plecow. Gdy zaczyna sie wejscie, dolaczasz ostatni albo odcinasz rotacje przez mid.",
+                p3: "Smokujesz Short/Lane, potem wchodzisz czwarty. Pilnujesz wyjscia z House i zachowujesz granat na retake, jesli go masz.",
+                p4: "Dajesz call po drugim flashu i wchodzisz drugi. Bierzesz przestrzen wokol site'u i wymuszasz trade na P1.",
+                p5: "Masz C4 i dwa flashe. Rzucasz oba nad B, wchodzisz trzeci i plantujesz przy Pillar tak, by bomba byla widoczna z Ramp."
+              }
+            },
+            {
+              id: "ancient-fast-b",
+              title: "3. Fast B - Full Execute",
+              type: "full buy",
+              objective: "Przelamac obrone B kompletem granatow, zanim CT zdaza dolozyc trzeciego gracza.",
+              grenades: "P2 smoke Long. P3 smoke Short. P4 molotov Cave/House. P5 smoke CT oraz dwa flashe.",
+              play: "P1 i P4 zajmuja Ruins i czekaja przy Ramp. P3 oraz P5 rzucaja zestaw odcinajacy B. Po molotovie i drugim flashu P1 robi entry, P4 trade, a P2 zamyka rotacje z mida.",
+              players: {
+                p1: "Idziesz pierwszy po drugim flashu. Czyscisz Pillar, default i bliski site; nie przebiegasz samotnie przez smoke CT.",
+                p2: "Na poczatku rzucasz smoke Long, potem trzymasz mid/Window przed pushem. Gdy wejscie rusza, przesuwasz sie do Lobby/Heaven i odcinasz rotacje przez House albo dolaczasz do site'u.",
+                p3: "Rzucasz smoke Short, potem wspierasz AWP z Ramp. Pilnujesz wyjscia ze smoke i zachowujesz pozycje do obrony bomby.",
+                p4: "Palasz Cave/House i dajesz call do wejscia. Wchodzisz drugi za P1, szukasz natychmiastowego trade'a i przejmujesz tyly site'u.",
+                p5: "Masz C4. Smokujesz CT, rzucasz dwa flashe nad B, wchodzisz trzeci i plantujesz pod Ramp po wyczyszczeniu Pillar."
+              }
+            },
+            {
+              id: "ancient-fast-a",
+              title: "4. Fast A - Smoke Wall",
+              type: "full buy",
+              objective: "Szybko odciac Temple i CT Spawn, a potem przejac caly A site.",
+              grenades: "P2 molotov Big Box/Plat. P3 smoke CT Spawn. P4 smoke Temple. P5 dwa flashe nad A.",
+              play: "Czterech graczy ustawia sie pod A Main, P2 trzyma i dolacza z Short. Smoke CT oraz Temple maja spasc razem; po molotovie i pierwszym flashu P1 rozpoczyna wejscie, drugi flash wspiera przejecie glebi.",
+              players: {
+                p1: "Wchodzisz pierwszy A Main. Czyscisz Boost i bliski site, a nastepnie robisz miejsce P4. Nie wbiegasz sam w Temple.",
+                p2: "Podchodzisz przez mid w Short, palisz Big Box/Plat i wchodzisz z opoznieniem. Po plancie pilnujesz Donut/Short.",
+                p3: "Smokujesz CT Spawn i zostajesz chwile A Main z AWP. Kryjesz wyjscie ze smoke oraz ewentualny retake z Temple.",
+                p4: "Smokujesz Temple, dajesz call i wchodzisz drugi. Przejmujesz Plat oraz glebie site'u, zawsze w zasiegu trade'a z P1.",
+                p5: "Masz C4 i dwa flashe. Flashujesz na call P4, wchodzisz trzeci i plantujesz dla A Main/Short."
+              }
+            },
+            {
+              id: "ancient-default-mid",
+              title: "5. Default - Mid Control 1-3-1",
+              type: "default",
+              objective: "Przejac mid i Short/Donut bez wczesnego wyboru site'u, jednoczesnie zatrzymujac push CT.",
+              grenades: "P3 smoke Mid. P4 smoke Short/Donut i molotov Cubby. P5 dwa flashe na Top Mid.",
+              play: "P2 sam kontroluje A Main, P1 pilnuje agresji B w Ruins, a P3-P5 biora Top Mid. Po zajeciu mida P4 calluje: split A przez Short/Donut, rotacja B albo spokojne utrzymanie kontroli do 40 sekundy.",
+              players: {
+                p1: "Trzymasz Water/Ruins i karzesz push B. Nie pokazujesz bomby. Po przejeciu mida jestes gotowy na wejscie B lub szybka rotacje A.",
+                p2: "Sam kontrolujesz A Main. Nie oddajesz darmowego fraga; twoim zadaniem jest zatrzymac push i utrzymac opcje poznego A.",
+                p3: "Smokujesz Mid, grasz AWP i bierzesz pierwszy kontakt po flashu. Po zajeciu Top Mid pilnujesz Window/Snipers Nest.",
+                p4: "Smokujesz Short/Donut, palisz Cubby i prowadzisz wejscie na Top Mid. Po informacji z bokow wybierasz koncowy site.",
+                p5: "Masz C4 i dwa flashe na Top Mid. Wchodzisz za P4, nie wychodzisz pierwszy i trzymasz bombe z dala od samotnych pojedynkow."
+              }
+            },
+            {
+              id: "ancient-split-a",
+              title: "6. Split A - Short/Donut & Main",
+              type: "full buy",
+              objective: "Zlamac A jednoczesnym naciskiem z A Main i Short/Donuta.",
+              grenades: "P3 smoke CT Spawn. P4 molotov Short/Donut. P5 smoke Temple i dwa flashe.",
+              play: "P1 i P2 czekaja A Main. P3-P5 biora mid, a potem Short/Donut. Gdy grupa Short jest gotowa, spadaja smoke CT i Temple; P4 daje call, obie strony wchodza w tej samej sekundzie.",
+              players: {
+                p1: "Czekasz A Main i wchodzisz pierwszy dopiero na call P4. Czyscisz Boost, Big Box i lewa strone site'u.",
+                p2: "Idziesz z P1 A Main, ale nie zdradzasz ustawienia. Wchodzisz drugi, pilnujesz trade'a i po plancie wracasz kontrolowac A Main.",
+                p3: "Pomagasz zajac mid, rzucasz smoke CT Spawn i z AWP odcinasz rotacje. Na site wchodzisz ostatni.",
+                p4: "Prowadzisz grupe przez mid do Short/Donuta, palisz bliska pozycje i dajesz call. Wychodzisz pierwszy ze Short na site.",
+                p5: "Masz C4, smoke Temple i dwa flashe. Wchodzisz ze Short za P4, plantujesz dla A Main i po plancie cofasz do Short."
+              }
+            },
+            {
+              id: "ancient-split-b",
+              title: "7. Split B - Ramp & House",
+              type: "full buy",
+              objective: "Wejsc na B z Ramp i House, zmuszajac kotwice do walki na dwa fronty.",
+              grenades: "P2 smoke Long. P3 smoke Mid. P4 molotov Cubby/Lamp Room. P5 smoke Short oraz dwa flashe B.",
+              play: "P1 z P2 czekaja w Ruins przy Ramp. P3-P5 przejmuja mid, przechodza przez Pit/Lamp Room do House. Po przygotowaniu P4 daje call; grupa House wychodzi pierwsza, a Ramp rusza pol sekundy pozniej.",
+              players: {
+                p1: "Czekasz przy Ramp i na call wchodzisz pierwszy z tej strony. Czyscisz Pillar oraz default i szukasz trade'a z P2.",
+                p2: "Na poczatku rzucasz smoke Long, potem idziesz z P1 i pilnujesz pusha Ruins. Wchodzisz drugi Ramp, a po plancie cofasz sie i kontrolujesz flanke.",
+                p3: "Smokujesz Mid przy zajmowaniu przestrzeni. Z AWP pilnujesz rotacji z Lane/Alley i wchodzisz ostatni z grupy House.",
+                p4: "Prowadzisz grupe mid do House, palisz Cubby/Lamp Room i dajesz finalny call. Wychodzisz pierwszy z House.",
+                p5: "Masz C4, smokujesz Short i flashujesz B. Wychodzisz z House za P4 i plantujesz tak, by bombe bylo widac z Ramp."
+              }
+            },
+            {
+              id: "ancient-fake-a-b",
+              title: "8. Fake A - Finish B",
+              type: "fake",
+              objective: "Wyciagnac rotacje w strone A i Short/Donuta, po czym uderzyc w oslablone B.",
+              grenades: "P2 smoke CT Spawn i flash A. P3 smoke Mid. P4 molotov Short/Donut i smoke Long. P5 smoke Short oraz dwa flashe B.",
+              play: "P2 robi samotny fake A po zajeciu mida przez P3-P4. P1 czeka cicho w Ruins, P5 przygotowuje granaty B. Po granatach A P2 nie umiera, tylko trzyma rotacje; reszta natychmiast schodzi Tunnel/Water i wykonuje B.",
+              players: {
+                p1: "Czekasz cicho w Ruins i nie pokazujesz sie przed callem. Po rozpoczeciu fake'u zajmujesz Ramp i wchodzisz pierwszy na B.",
+                p2: "Robisz fake A: smoke CT Spawn, flash i kilka kontrolowanych strzalow z A Main. Nie wchodzisz sam; przezywasz i odcinasz powrot CT.",
+                p3: "Smokujesz Mid i pokazujesz obecnosc AWP na Top Mid. Po fake'u cofasz przez Tunnel/Water do B i pilnujesz dlugiej rotacji.",
+                p4: "Palasz Short/Donut i sprzedajesz split A, potem callujesz rotacje. Przy B rzucasz smoke Long i dolaczasz do P1 jako drugi entry.",
+                p5: "Masz C4 i zestaw B. Czekasz poza zasiegiem informacji CT, na call rzucasz smoke Short oraz flashe, wchodzisz trzeci i plantujesz."
+              }
+            }
+          ],
+          ct: [],
+          map: [
+            { id: "ancient-callouts", title: "Mapa Ancient - callouty", image: "assets/maps/ancient-map.png", note: "Kliknij grafike, zeby powiekszyc; scroll/pinch przybliza, a przeciagniecie przesuwa mape." }
+          ]
+        }
       }
     ];
 
@@ -1273,10 +1407,14 @@
         : "Kliknij grafike, potem scroll/pinch do zoomu i przeciaganie do przesuwania.";
 
       if (!entries.length) {
+        const emptyTitle = state.role === "ct" ? "Taktyki CT nie sa jeszcze uzupelnione" : "Brak wpisow w tej sekcji";
+        const emptyText = state.role === "ct"
+          ? "Ta zakladka zostala celowo pusta. Aktualnie uzupelnione sa tylko taktyki Terro oraz mapa calloutow."
+          : "Dla tej podkategorii nie dodano jeszcze tresci.";
         contentSection.innerHTML = `
           <div class="notice">
-            <strong>Brak tekstu taktyk w tej sekcji</strong>
-            <span>Drugi dokument Google Docs zwraca 401 przy eksporcie, wiec nie da sie jeszcze pobrac jego tresci automatycznie. Po zmianie udostepnienia na "kazdy z linkiem moze wyswietlac" uzupelnie to bez przebudowy strony.</span>
+            <strong>${emptyTitle}</strong>
+            <span>${emptyText}</span>
           </div>
         `;
         return;

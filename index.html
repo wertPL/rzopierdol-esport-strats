@@ -1306,6 +1306,22 @@
             { id: "ancient-callouts", title: "Mapa Ancient - callouty", image: "assets/maps/ancient-map.png", note: "Kliknij grafike, zeby powiekszyc; scroll/pinch przybliza, a przeciagniecie przesuwa mape." }
           ]
         }
+      },
+      {
+        id: "inferno",
+        name: "Inferno",
+        status: "CT i mapa uzupelnione",
+        description: "Ustawienia CT oraz mapa calloutow Inferno.",
+        defaultRole: "ct",
+        sections: {
+          t: [],
+          ct: [
+            { id: "inferno-ct-setup", title: "Ustawienia CT Inferno", image: "assets/maps/inferno-ct.png", note: "Role takie same jak na Mirage. Kliknij grafike, zeby powiekszyc i przesuwac." }
+          ],
+          map: [
+            { id: "inferno-callouts", title: "Mapa Inferno - callouty", image: "assets/maps/inferno-map.png", note: "Kliknij grafike, zeby powiekszyc; scroll/pinch przybliza, a przeciagniecie przesuwa mape." }
+          ]
+        }
       }
     ];
 
@@ -1528,7 +1544,8 @@
       const modalAction = event.target.closest("[data-modal-action]");
 
       if (mapButton) {
-        switchView({ map: mapButton.dataset.map, role: "t" });
+        const selectedMap = strats.find((map) => map.id === mapButton.dataset.map);
+        switchView({ map: mapButton.dataset.map, role: selectedMap?.defaultRole || "t" });
       }
 
       if (roleButton) {

@@ -627,6 +627,40 @@
       background: rgba(123, 53, 255, .14);
     }
 
+    .callout-rules {
+      display: grid;
+      gap: 8px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(9, 10, 15, .38);
+    }
+
+    .callout-rule {
+      display: grid;
+      grid-template-columns: 152px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      font-size: 13px;
+    }
+
+    .callout-rule strong {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-size: 11px;
+    }
+
+    .callout-rule span {
+      color: #edf1f8;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .callout-rule[data-kind="required"] strong,
+    .callout-rule[data-kind="required"] span {
+      color: #ff695e;
+    }
+
     .image-preview {
       display: block;
       width: 100%;
@@ -848,6 +882,11 @@
         grid-template-columns: 1fr;
       }
 
+      .callout-rule {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
       .legend-list {
         grid-template-columns: 1fr;
       }
@@ -1046,7 +1085,14 @@
             { id: "mirage-ct-setup", title: "Ustawienia CT Mirage", image: "assets/maps/mirage-ct.png", note: "Kliknij grafike, zeby powiekszyc i przesuwac." }
           ],
           map: [
-            { id: "mirage-callouts", title: "Mapa Mirage - callouty", image: "assets/maps/mirage-map.png", note: "Mapa pogladowa do szybkiego odnajdywania miejscowek." }
+            {
+              id: "mirage-callouts",
+              title: "Mapa Mirage - callouty",
+              image: "assets/maps/mirage-map.png",
+              note: "Mapa pogladowa do szybkiego odnajdywania miejscowek.",
+              aliases: ["Balkon = Drewno", "Underpass = Under", "Sniper's Nest = Okno", "Catwalk = Short", "Market = Kuchnia"],
+              requiredNames: ["Triple Box = Fire Box", "Fire Box = Ninja", "Ninja = 2nd Ninja"]
+            }
           ]
         }
       },
@@ -1167,7 +1213,14 @@
             { id: "cache-ct-setup", title: "Ustawienia CT Cache", image: "assets/maps/cache-ct.png", note: "Role jak na Mirage, grafika do powiekszenia i przesuwania." }
           ],
           map: [
-            { id: "cache-callouts", title: "Mapa Cache - callouty", image: "assets/maps/cache-map.png", note: "Mapa pogladowa do szybkiego odnajdywania miejscowek." }
+            {
+              id: "cache-callouts",
+              title: "Mapa Cache - callouty",
+              image: "assets/maps/cache-map.png",
+              note: "Mapa pogladowa do szybkiego odnajdywania miejscowek.",
+              aliases: ["Truck = Car", "Z = Okno", "Fork = Wozek", "Cat = Catwalk / Rusztowanie", "Checkers = Szatnia", "Shroud = Boxy"],
+              requiredNames: ["Squeaky = Drzwi"]
+            }
           ]
         }
       },
@@ -1303,7 +1356,14 @@
             { id: "ancient-ct-setup", title: "Ustawienia CT Ancient", image: "assets/maps/ancient-ct.png", note: "Role takie same jak na Mirage. Kliknij grafike, zeby powiekszyc i przesuwac." }
           ],
           map: [
-            { id: "ancient-callouts", title: "Mapa Ancient - callouty", image: "assets/maps/ancient-map.png", note: "Kliknij grafike, zeby powiekszyc; scroll/pinch przybliza, a przeciagniecie przesuwa mape." }
+            {
+              id: "ancient-callouts",
+              title: "Mapa Ancient - callouty",
+              image: "assets/maps/ancient-map.png?v=f17e07a87248",
+              note: "Kliknij grafike, zeby powiekszyc; scroll/pinch przybliza, a przeciagniecie przesuwa mape.",
+              aliases: ["Sniper's Nest = Okno", "Lamp Room = Gleboko Cave"],
+              requiredNames: ["Donut / Tunnels = Donut (nie Tunnels)"]
+            }
           ]
         }
       },
@@ -1319,7 +1379,14 @@
             { id: "inferno-ct-setup", title: "Ustawienia CT Inferno", image: "assets/maps/inferno-ct.png", note: "Role takie same jak na Mirage. Kliknij grafike, zeby powiekszyc i przesuwac." }
           ],
           map: [
-            { id: "inferno-callouts", title: "Mapa Inferno - callouty", image: "assets/maps/inferno-map.png", note: "Kliknij grafike, zeby powiekszyc; scroll/pinch przybliza, a przeciagniecie przesuwa mape." }
+            {
+              id: "inferno-callouts",
+              title: "Mapa Inferno - callouty",
+              image: "assets/maps/inferno-map.png?v=8a38c26de52a",
+              note: "Kliknij grafike, zeby powiekszyc; scroll/pinch przybliza, a przeciagniecie przesuwa mape.",
+              aliases: ["Coffins = Trumna", "Dark = Ciemnia", "Quad = Trojki", "Underpass = Under / Tunel", "CT Apps = Apps", "Patio = Dach", "Pit = Piach"],
+              requiredNames: ["Garden = Trumna", "Terrace = Speed Way", "Kitchen = Library / Biblia"]
+            }
           ]
         }
       }
@@ -1426,6 +1493,22 @@
     }
 
     function renderImageCard(item) {
+      const calloutRules = [
+        item.aliases?.length ? { kind: "allowed", label: "Mozna tez mowic", values: item.aliases } : null,
+        item.requiredNames?.length ? { kind: "required", label: "Nazwy obowiazkowe", values: item.requiredNames } : null
+      ].filter(Boolean);
+
+      const calloutRulesMarkup = calloutRules.length ? `
+        <div class="callout-rules">
+          ${calloutRules.map((rule) => `
+            <div class="callout-rule" data-kind="${rule.kind}">
+              <strong>${rule.label}</strong>
+              <span>${rule.values.join(" &nbsp; | &nbsp; ")}</span>
+            </div>
+          `).join("")}
+        </div>
+      ` : "";
+
       return `
         <article class="image-card" id="${item.id}">
           <header>
@@ -1435,6 +1518,7 @@
             </div>
             <button type="button" data-open-image="${item.image}" data-title="${item.title}">Powieksz</button>
           </header>
+          ${calloutRulesMarkup}
           <img class="image-preview" src="${item.image}" alt="${item.title}" data-open-image="${item.image}" data-title="${item.title}" />
         </article>
       `;

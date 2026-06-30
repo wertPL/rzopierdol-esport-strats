@@ -525,9 +525,9 @@
 
     .player-row {
       display: grid;
-      grid-template-columns: 52px minmax(0, 1fr);
+      grid-template-columns: 52px minmax(0, 1fr) auto;
       gap: 10px;
-      align-items: start;
+      align-items: center;
       padding: 10px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -552,6 +552,23 @@
       margin: 0;
       color: #dce2ee;
       font-size: 14px;
+    }
+
+    .c4-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      justify-self: end;
+      width: 42px;
+      height: 32px;
+      color: #ff4545;
+      filter: drop-shadow(0 0 7px rgba(255, 69, 69, .32));
+    }
+
+    .c4-icon svg {
+      display: block;
+      width: 100%;
+      height: 100%;
     }
 
     body[data-highlight="p1"] .player-row:not([data-player="p1"]),
@@ -983,6 +1000,7 @@
               id: "mirage-default-b-pistol-b",
               title: "2. Default B / Pistol B - Mid/Aps Split",
               type: "default",
+              c4Holder: "p3",
               objective: "Wejscie na B site przez mida i aparty.",
               grenades: "P1 smoke. P2 flash i smoke. P3 smoke. P5 smoke.",
               play: "P1 i P2 ida TV/Alley, czekaja na znak, smokuja, flashuja i wchodza apartami. Reszta idzie mid do shorta po wyrzuceniu smoke.",
@@ -1350,10 +1368,22 @@
     }
 
     function renderTacticCard(tactic) {
+      const c4Holder = tactic.c4Holder || "p5";
       const playerRows = Object.entries(tactic.players).map(([player, text]) => `
         <div class="player-row" data-player="${player}" style="--player-color: ${playerColors[player]}">
           <span class="player-label">${player.toUpperCase()}</span>
           <p>${text}</p>
+          ${player === c4Holder ? `
+            <span class="c4-icon" title="${player.toUpperCase()} ma C4" aria-label="${player.toUpperCase()} ma C4">
+              <svg viewBox="0 0 42 32" aria-hidden="true" focusable="false">
+                <path d="M8 7V4h19v3M13 4V2m9 2V2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                <rect x="4" y="7" width="30" height="22" rx="4" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="1.7" />
+                <rect x="9" y="12" width="20" height="11" rx="2" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="1.3" />
+                <text x="19" y="20.5" fill="currentColor" font-size="8.5" font-weight="900" text-anchor="middle">C4</text>
+                <path d="M34 12c5-1 3-7 6-8M34 17c6 1 4 7 7 8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+              </svg>
+            </span>
+          ` : ""}
         </div>
       `).join("");
 
